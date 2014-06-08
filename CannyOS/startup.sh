@@ -50,6 +50,12 @@ echo ""
 #Start memcached d
 service memcached start
 
+#Start php
+php5-fpm &
+
+#Start NGINX
+nginx &
+
 
 echo ""
 echo "*****************************************************"
