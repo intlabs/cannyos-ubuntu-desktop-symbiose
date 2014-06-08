@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# CannyOS cannyos-user-desktop-symbiose container build script
+# CannyOS cannyos-ubuntu-desktop-symbiose container build script
 #
-# https://github.com/intlabs/cannyos-user-desktop-symbiose
+# https://github.com/intlabs/cannyos-ubuntu-desktop-symbiose
 #
 # Copyright 2014 Pete Birley
 #
@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 clear
-curl https://raw.githubusercontent.com/intlabs/cannyos-user-desktop-symbiose/master/CannyOS/CannyOS.splash
+curl https://raw.githubusercontent.com/intlabs/cannyos-ubuntu-desktop-symbiose/master/CannyOS/CannyOS.splash
 #     *****************************************************
 #     *                                                   *
 #     *        _____                    ____  ____        *
@@ -37,7 +37,7 @@ echo "*****************************************************"
 echo ""
 
 # Build base container image
-sudo docker build -t="intlabs/cannyos-user-desktop-symbiose" github.com/intlabs/cannyos-user-desktop-symbiose
+sudo docker build -t="intlabs/cannyos-ubuntu-desktop-symbiose" github.com/intlabs/cannyos-ubuntu-desktop-symbiose
 
 echo ""
 echo "*****************************************************"
@@ -48,18 +48,18 @@ echo "*****************************************************"
 echo ""
 
 # Make shared directory on host
-sudo mkdir -p "/CannyOS/build/cannyos-user-desktop-symbiose"
+sudo mkdir -p "/CannyOS/build/cannyos-ubuntu-desktop-symbiose"
 # Ensure that there it is clear
-sudo rm -r -f "/CannyOS/build/cannyos-user-desktop-symbiose/*"
+sudo rm -r -f "/CannyOS/build/cannyos-ubuntu-desktop-symbiose/*"
 
 # Remove any existing containers
-sudo docker stop cannyos-user-desktop-symbiose
+sudo docker stop cannyos-ubuntu-desktop-symbiose
 
 # Launch built base container image
 sudo docker run -i -t --rm \
  --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" \
- --volume "/CannyOS/build/cannyos-user-desktop-symbiose":"/CannyOS/Host" \
- --name "cannyos-user-desktop-symbiose" \
+ --volume "/CannyOS/build/cannyos-ubuntu-desktop-symbiose":"/CannyOS/Host" \
+ --name "cannyos-ubuntu-desktop-symbiose" \
  --user "root" \
  -p 80:80 \
- intlabs/cannyos-user-desktop-symbiose 
+ intlabs/cannyos-ubuntu-desktop-symbiose 

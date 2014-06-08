@@ -1,7 +1,7 @@
 #
 # CannyOS User Storage Dropbox
 #
-# https://github.com/intlabs/cannyos-user-desktop-symbiose
+# https://github.com/intlabs/cannyos-ubuntu-desktop-symbiose
 #
 # Copyright 2014 Pete Birley
 #

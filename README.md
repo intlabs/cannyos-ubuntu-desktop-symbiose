@@ -19,17 +19,17 @@ This repository contains the *Dockerfile* and *associated files* for setting up 
 2. You can then build the container set from the via entering:
 
 	Manual building can be done with the following:
-	`sudo docker build -t="intlabs/cannyos-user-desktop-symbiose" github.com/intlabs/cannyos-user-desktop-symbiose`
+	`sudo docker build -t="intlabs/cannyos-ubuntu-desktop-symbiose" github.com/intlabs/cannyos-ubuntu-desktop-symbiose`
 
 	Two stage building should not be required but is avaliblible via:
-	`bash <(curl -s https://raw.githubusercontent.com/intlabs/cannyos-user-desktop-symbiose/master/Build.sh)`
+	`bash <(curl -s https://raw.githubusercontent.com/intlabs/cannyos-ubuntu-desktop-symbiose/master/Build.sh)`
 
 	
 ### Usage
 
 * this will run and drop you into a session with privileges to run FUSE:
 
-`sudo docker run -it --rm --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" intlabs/cannyos-user-desktop-symbiose`
+`sudo docker run -it --rm --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" intlabs/cannyos-ubuntu-desktop-symbiose`
 
 
 # Copyright 2014 Pete Birley
