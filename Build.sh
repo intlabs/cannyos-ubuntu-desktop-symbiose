@@ -61,5 +61,5 @@ sudo docker run -i -t --rm \
  --volume "/CannyOS/build/cannyos-ubuntu-desktop-symbiose":"/CannyOS/Host" \
  --name "cannyos-ubuntu-desktop-symbiose" \
  --user "root" \
- -p 80:80 \
+ -p 802:80 \
  intlabs/cannyos-ubuntu-desktop-symbiose 
