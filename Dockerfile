@@ -63,10 +63,13 @@ RUN chown -R www-data .
 # Put in a php info file
 RUN echo '<?php phpinfo(); ?>' > info.php
 
-# Pull in latest version of symbiose
+# Pull in symbiose
 WORKDIR /tmp
 RUN apt-get install git -y
-RUN git clone https://github.com/symbiose/symbiose.git
+#Latest version
+#RUN git clone https://github.com/symbiose/symbiose.git
+#Broadway version
+RUN wget https://github.com/symbiose/symbiose/archive/feat-broadway.zip && unzip feat-broadway.zip && mv symbiose-feat-broadway symbiose && rm -f feat-broadway.zip
 
 #Install grunt
 RUN sudo apt-get install -y nodejs npm
