@@ -69,6 +69,7 @@ RUN apt-get install git -y
 #Latest version
 RUN git clone https://github.com/symbiose/symbiose.git
 #Broadway version
+RUN git checkout feat-broadway
 #RUN wget https://github.com/symbiose/symbiose/archive/feat-broadway.zip && unzip feat-broadway.zip && mv symbiose-feat-broadway symbiose && rm -f feat-broadway.zip
 
 #Install grunt
