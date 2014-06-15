@@ -82,7 +82,7 @@ RUN npm install
 RUN grunt build
 
 # Move built system into place
-RUN mv * /usr/share/nginx/html
+RUN mv build/* /usr/share/nginx/html
 
 # Fix Permissions
 WORKDIR /usr/share/nginx/html
