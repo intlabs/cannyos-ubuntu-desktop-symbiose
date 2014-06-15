@@ -21,9 +21,12 @@
 # Pull base image.
 FROM intlabs/dockerfile-cannyos-ubuntu-14_04-fuse
 
+MAINTAINER "Pete Birley (petebirley@gmail.com)"
+
 # Set environment variables.
 ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
+ENV DISTRO ubuntu
 
 # Set the working directory
 WORKDIR /
@@ -34,24 +37,21 @@ WORKDIR /
 #                                                   *
 #****************************************************
 
-#Allow remote root login with password
-RUN sed -i -e 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && /etc/init.d/ssh restart
-
 # Install nginx
-RUN apt-get update && apt-get install -y nginx
+RUN apt-get update && apt-get install -yqq nginx
 
 # Install php5
-RUN apt-get install -y php5-fpm php5-cli php5-mysql
+RUN apt-get install -yqq php5-fpm php5-cli php5-mysql
 
 #setup php ini file
 RUN sed -i 's/cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php5/fpm/php.ini
 
-#Configure nginx for php
-RUN rm -f /etc/nginx/sites-available/default
-ADD CannyOS/Desktop/NGINX/server /etc/nginx/sites-available/default
-
 #Install memcache
-RUN sudo apt-get install -y php5-memcache memcached php-pear netcat build-essential php5-memcached
+RUN sudo apt-get install -yqq php5-memcache memcached php-pear netcat build-essential php5-memcached
+
+# Install nginx configuration
+RUN rm -f /etc/nginx/sites-available/default
+ADD Config/NGINX/server /etc/nginx/sites-available/default
 
 # Move into site root
 WORKDIR /usr/share/nginx/html
@@ -61,16 +61,15 @@ RUN rm -r -f *
 RUN chown -R www-data .
 
 # Put in a php info file
-RUN echo '<?php phpinfo(); ?>' > info.php
+#RUN echo '<?php phpinfo(); ?>' > info.php
 
 # Pull in symbiose
 WORKDIR /tmp
-RUN apt-get install git -y
+RUN apt-get install -yqq git
 #Latest version
 RUN git clone https://github.com/symbiose/symbiose.git
 #Broadway version
 RUN cd symbiose && git checkout feat-broadway
-#RUN wget https://github.com/symbiose/symbiose/archive/feat-broadway.zip && unzip feat-broadway.zip && mv symbiose-feat-broadway symbiose && rm -f feat-broadway.zip
 
 #Install grunt
 RUN sudo apt-get install -y nodejs npm
@@ -99,9 +98,6 @@ RUN rm -r -f symbiose
 #                                                   *
 #****************************************************
 
-#SSH
-#EXPOSE 22/tcp
-
 #HTTP
 EXPOSE 80/tcp
 
@@ -111,13 +107,10 @@ EXPOSE 80/tcp
 #                                                   *
 #****************************************************
 
-# Add startup 
-ADD /CannyOS/startup.sh /CannyOS/startup.sh
-RUN chmod +x /CannyOS/startup.sh
-
-# Add post-install script
-#ADD /CannyOS/post-install.sh /CannyOS/post-install.sh
-#RUN chmod +x /CannyOS/post-install.sh
+#Add startup & post-install script
+ADD CannyOS /CannyOS
+WORKDIR /CannyOS
+RUN chmod +x *.sh
 
 # Define default command.
 ENTRYPOINT ["/CannyOS/startup.sh"]
