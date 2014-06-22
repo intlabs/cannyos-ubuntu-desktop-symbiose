@@ -1,9 +1,5 @@
 #!/bin/sh
 #
-# CannyOS cannyos-ubuntu-desktop-symbiose container build script
-#
-# https://github.com/intlabs/cannyos-ubuntu-desktop-symbiose
-#
 # Copyright 2014 Pete Birley
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-clear
-curl https://raw.githubusercontent.com/intlabs/cannyos-ubuntu-desktop-symbiose/master/CannyOS/CannyOS.splash
+
+echo ""
+cat /CannyOS/CannyOS.splash
 #     *****************************************************
 #     *                                                   *
 #     *        _____                    ____  ____        *
@@ -31,35 +28,40 @@ curl https://raw.githubusercontent.com/intlabs/cannyos-ubuntu-desktop-symbiose/m
 #     *                                                   *
 #     *****************************************************
 echo "*                                                   *"
-echo "*         Ubuntu docker container builder           *"
+echo "*         Post-install script launch                *"
 echo "*                                                   *"
 echo "*****************************************************"
 echo ""
 
-# Build base container image
-sudo docker build -t="intlabs/cannyos-ubuntu-desktop-symbiose" github.com/intlabs/cannyos-ubuntu-desktop-symbiose
+# Put content of script here
+
 
 echo ""
-echo "*****************************************************"
+cat /CannyOS/CannyOS.splash
+#     *****************************************************
+#     *                                                   *
+#     *        _____                    ____  ____        *
+#     *       / ___/__ ____  ___  __ __/ __ \/ __/        *
+#     *      / /__/ _ `/ _ \/ _ \/ // / /_/ /\ \          *
+#     *      \___/\_,_/_//_/_//_/\_, /\____/___/          *
+#     *                         /___/                     *
+#     *                                                   *
+#     *                                                   *
+#     *****************************************************
 echo "*                                                   *"
-echo "*         Built base container image                *"
+echo "*         Post-install script finish                *"
 echo "*                                                   *"
 echo "*****************************************************"
 echo ""
 
-# Make shared directory on host
-sudo mkdir -p "/CannyOS/build/cannyos-ubuntu-desktop-symbiose"
-# Ensure that there it is clear
-sudo rm -r -f "/CannyOS/build/cannyos-ubuntu-desktop-symbiose/*"
+#Move post-install script and timestamp it
+mv "/CannyOS/post-install.sh" "/CannyOS/post-install.done.$(date +%Y_%m_%d.%H_%M_%S)"
 
-# Remove any existing containers
-sudo docker stop cannyos-ubuntu-desktop-symbiose
+#Wait 30 seconds
+sleep 30
 
-# Launch built base container image
-sudo docker run -i -t --rm \
- --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" \
- --volume "/CannyOS/build/cannyos-ubuntu-desktop-symbiose":"/CannyOS/Host" \
- --name "cannyos-ubuntu-desktop-symbiose" \
- --user "root" \
- -p 80:80 \
- intlabs/cannyos-ubuntu-desktop-symbiose 
+#Mark the post-install script as complete to the host
+touch "/CannyOS/Host/done"
+
+#Create bash shell
+bash 
