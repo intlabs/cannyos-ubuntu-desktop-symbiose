@@ -80,6 +80,7 @@ RUN grunt build
 
 # Move built system into place
 RUN mv build/* /usr/share/nginx/html
+RUN rm -f /usr/share/nginx/html/.htaccess
 
 # Fix Permissions
 WORKDIR /usr/share/nginx/html
