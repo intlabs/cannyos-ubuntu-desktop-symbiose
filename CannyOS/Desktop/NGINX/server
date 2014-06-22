@@ -84,4 +84,4 @@ server {
         location /var {
         rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
         }
-} 
+}
