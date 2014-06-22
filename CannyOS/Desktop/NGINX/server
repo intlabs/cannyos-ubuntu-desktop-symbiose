@@ -8,13 +8,13 @@ server {
         # Make site accessible from http://localhost/
         server_name localhost;
 
-        location / {
+        #location / {
                 # First attempt to serve request as file, then
                 # as directory, then fall back to displaying a 404.
-                try_files $uri $uri/ =404;
+                #try_files $uri $uri/ =404;
                 # Uncomment to enable naxsi on this location
                 # include /etc/nginx/naxsi.rules
-        }
+        #}
 
         # Only for nginx-naxsi used with nginx-naxsi-ui : process denied requests
         #location /RequestDenied {
@@ -50,4 +50,38 @@ server {
         #location ~ /\.ht {
         #       deny all;
         #}
-}
+        # nginx configuration
+        location / {
+        rewrite ^/([a-zA-Z0-9-_.]+)\.html$ /index.php?ui=$1 break;
+        }
+        location /webos {
+        rewrite ^/webos\.webapp$ /sbin/manifestcall.php?type=firefox break;
+        }
+        location /api {
+        rewrite ^/api/(.*)$ /sbin/apicall.php?path=$1 break;
+        }
+        location /ws {
+        rewrite ^/ws/?$ /sbin/wsserver.php break;
+        }
+        location /bin {
+        rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+        }
+        location /boot {
+        rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+        }
+        location /etc {
+        rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+        }
+        location /home {
+        rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+        }
+        location /tmp {
+        rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+        }
+        location /usr {
+        rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+        }
+        location /var {
+        rewrite ^/(bin|boot|etc|home|tmp|usr|var)/(.*)$ /sbin/rawdatacall.php?type=file&path=/$1/$2 break;
+        }
+} 

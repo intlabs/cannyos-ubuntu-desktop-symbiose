@@ -56,10 +56,10 @@ sudo rm -r -f "/CannyOS/build/cannyos-ubuntu-desktop-symbiose/*"
 sudo docker stop cannyos-ubuntu-desktop-symbiose
 
 # Launch built base container image
-sudo docker run -i -t --rm \
+sudo docker run -i -t -d \
  --privileged=true --lxc-conf="native.cgroup.devices.allow = c 10:229 rwm" \
  --volume "/CannyOS/build/cannyos-ubuntu-desktop-symbiose":"/CannyOS/Host" \
  --name "cannyos-ubuntu-desktop-symbiose" \
  --user "root" \
- -p 80:80 \
+ -p 80 \
  intlabs/cannyos-ubuntu-desktop-symbiose 
