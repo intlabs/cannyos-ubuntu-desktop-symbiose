@@ -69,7 +69,7 @@ RUN apt-get install -yqq git
 #Latest version
 RUN git clone https://github.com/symbiose/symbiose.git
 #Broadway version
-RUN cd symbiose && git checkout feat-broadway
+#RUN cd symbiose && git checkout feat-broadway
 
 #Install grunt
 RUN sudo apt-get install -y nodejs npm
