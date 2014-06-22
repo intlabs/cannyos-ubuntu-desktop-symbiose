@@ -67,6 +67,7 @@ RUN echo '<?php phpinfo(); ?>' > info.php
 WORKDIR /tmp
 RUN apt-get install git -y
 RUN git clone https://github.com/symbiose/symbiose.git
+RUN cd symbiose && git checkout feat-broadway
 
 #Install grunt
 RUN sudo apt-get install -y nodejs npm
