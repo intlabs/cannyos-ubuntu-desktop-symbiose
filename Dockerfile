@@ -83,9 +83,17 @@ RUN grunt build
 RUN mv build/* /usr/share/nginx/html
 RUN rm -f /usr/share/nginx/html/.htaccess
 
+
+#Fix a bug with the terminal: https://github.com/symbiose/symbiose/issues/367
+RUN rm /usr/share/nginx/html/usr/lib/gnome-terminal/gnome-terminal.js
+ADD https://raw.githubusercontent.com/symbiose/symbiose/6e5d030a627dc51c955be86d5e4251b0c12eb41b/usr/lib/gnome-terminal/gnome-terminal.js /usr/share/nginx/html/usr/lib/gnome-terminal/gnome-terminal.js
+
+
 # Fix Permissions
 WORKDIR /usr/share/nginx/html
 RUN chown -R www-data .
+
+
 
 # Cleanup after install
 WORKDIR /tmp
